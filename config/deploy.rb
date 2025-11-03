@@ -2,7 +2,7 @@
 lock "~> 3.19.2"
 
 set :application, "prototypes"
-set :repo_url, "git@github.com:pjcalkins2229/prototypes"
+set :repo_url, "https://github.com/pjcalkins2229/prototypes.git"
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp

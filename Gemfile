@@ -14,10 +14,8 @@ gem "puma", ">= 5.0"
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 
-group :development do
-  # Deployment
-  gem 'capistrano', '~> 3.17', require: false
-  gem 'capistrano-rails', '~> 1.6', require: false
-  gem 'capistrano-rbenv', '~> 2.2', require: false
-  gem 'capistrano-bundler', '~> 2.1', require: false
-end
+# Deployment
+gem 'capistrano', '~> 3.17', require: false, groups: [:development]
+gem 'capistrano-rails', '~> 1.6', require: false, groups: [:development]
+gem 'capistrano-rbenv', '~> 2.2', require: false, groups: [:development]
+gem 'capistrano-bundler', '~> 2.1', require: false, groups: [:development]

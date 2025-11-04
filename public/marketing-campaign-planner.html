@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketing Campaign Planner | Well-Being Index</title>
+    <meta name="description" content="Plan and visualize your multi-brand marketing campaign execution with automated asset tracking and production checklists.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f9fafb;
+            color: #111827;
+            line-height: 1.5;
+        }
+
+        .container {
+            min-height: 100vh;
+            padding: 1.5rem;
+        }
+
+        .max-w-7xl {
+            max-width: 80rem;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        h1 {
+            font-size: 1.875rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        h4 {
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .text-gray-600 {
+            color: #4b5563;
+        }
+
+        .text-gray-500 {
+            color: #6b7280;
+        }
+
+        .text-gray-400 {
+            color: #9ca3af;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background-color: #2563eb;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #1d4ed8;
+        }
+
+        .btn-text {
+            background: transparent;
+            color: #2563eb;
+            padding: 0.25rem 0.5rem;
+        }
+
+        .btn-text:hover {
+            color: #1d4ed8;
+        }
+
+        .btn-icon {
+            padding: 0.5rem;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            border-radius: 0.375rem;
+        }
+
+        .btn-icon:hover {
+            background-color: #f3f4f6;
+        }
+
+        .btn-danger {
+            color: #dc2626;
+        }
+
+        .btn-danger:hover {
+            background-color: #fee2e2;
+        }
+
+        .input, .select {
+            width: 100%;
+            padding: 0.5rem 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+        }
+
+        .input:focus, .select:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 0.5rem;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+        }
+
+        .space-y-4 > * + * {
+            margin-top: 1rem;
+        }
+
+        .space-y-2 > * + * {
+            margin-top: 0.5rem;
+        }
+
+        .flex {
+            display: flex;
+        }
+
+        .flex-between {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .content-item {
+            display: flex;
+            gap: 0.5rem;
+            align-items: flex-start;
+            padding: 0.75rem;
+            background-color: #f9fafb;
+            border-radius: 0.375rem;
+        }
+
+        .content-item input {
+            flex: 1;
+        }
+
+        .week-container {
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            padding: 1rem;
+        }
+
+        .brand-section {
+            padding-left: 1rem;
+        }
+
+        .brand-section.cow {
+            border-left: 4px solid #10b981;
+        }
+
+        .brand-section.wbi {
+            border-left: 4px solid #3b82f6;
+        }
+
+        .email-card {
+            padding: 0.5rem;
+            border-radius: 0.375rem;
+        }
+
+        .email-card.cow {
+            background-color: #ecfdf5;
+        }
+
+        .email-card.wbi {
+            background-color: #eff6ff;
+        }
+
+        .stat-card {
+            padding: 1rem;
+            border-radius: 0.5rem;
+            text-align: center;
+        }
+
+        .stat-card.cow {
+            background-color: #ecfdf5;
+            border-left: 4px solid #10b981;
+        }
+
+        .stat-card.wbi {
+            background-color: #eff6ff;
+            border-left: 4px solid #3b82f6;
+        }
+
+        .stat-card.total {
+            background-color: #f5f3ff;
+            border-left: 4px solid #8b5cf6;
+        }
+
+        .stat-number {
+            font-size: 1.875rem;
+            font-weight: 700;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: #6b7280;
+        }
+
+        .checklist-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .checklist-item {
+            font-size: 0.875rem;
+            padding: 0.5rem;
+            border-radius: 0.375rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .checklist-item.cow {
+            background-color: #ecfdf5;
+        }
+
+        .checklist-item.wbi {
+            background-color: #eff6ff;
+        }
+
+        .text-sm {
+            font-size: 0.875rem;
+        }
+
+        .text-xs {
+            font-size: 0.75rem;
+        }
+
+        .italic {
+            font-style: italic;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .brand-indicator {
+            width: 0.75rem;
+            height: 0.75rem;
+            border-radius: 9999px;
+            display: inline-block;
+        }
+
+        .brand-indicator.cow {
+            background-color: #10b981;
+        }
+
+        .brand-indicator.wbi {
+            background-color: #3b82f6;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            text-align: center;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2, .grid-3, .grid-4, .summary-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .icon {
+            width: 1.125rem;
+            height: 1.125rem;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="max-w-7xl">
+            <!-- Header -->
+            <div class="card">
+                <h1>Campaign Planning Tool</h1>
+                <p class="text-gray-600">Plan and visualize your multi-brand campaign execution</p>
+            </div>
+
+            <!-- Campaign Setup -->
+            <div class="card">
+                <div class="flex-between" style="margin-bottom: 1rem;">
+                    <h2>Campaign Setup</h2>
+                    <button class="btn-text" onclick="toggleSetup()">
+                        <span id="setupToggleText">Hide</span> Setup
+                    </button>
+                </div>
+
+                <div id="setupSection" class="space-y-4">
+                    <div class="grid-2">
+                        <div>
+                            <label class="label">Campaign Name</label>
+                            <input type="text" id="campaignName" class="input"
+                                   placeholder="e.g., State of Well-Being Report 2025"
+                                   onchange="updateState()">
+                        </div>
+                        <div>
+                            <label class="label">Campaign Duration</label>
+                            <select id="duration" class="select" onchange="updateDuration()">
+                                <option value="4">4 Weeks</option>
+                                <option value="6">6 Weeks</option>
+                                <option value="8" selected>8 Weeks</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="label">Main Offer/Gated Content</label>
+                        <input type="text" id="mainOffer" class="input"
+                               placeholder="e.g., 2025 State of Well-Being Report"
+                               onchange="updateState()">
+                    </div>
+
+                    <div>
+                        <div class="flex-between" style="margin-bottom: 0.75rem;">
+                            <label class="label" style="margin-bottom: 0;">Supporting Content Pieces</label>
+                            <button class="btn btn-primary" onclick="addSupportingContent()">
+                                <span>+</span> Add Content
+                            </button>
+                        </div>
+                        <div id="supportingContentList" class="space-y-2"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Weekly Plan -->
+            <div class="card">
+                <h2>Weekly Email Plan</h2>
+                <div id="weeklyPlan" class="space-y-4"></div>
+            </div>
+
+            <!-- Ad Requirements -->
+            <div class="card">
+                <h2>Ad Requirements</h2>
+                <div class="grid-3" id="adStats">
+                    <div class="stat-card cow">
+                        <div class="stat-label" style="color: #059669;">COW Ads</div>
+                        <div class="stat-number" style="color: #065f46;" id="cowAdCount">0</div>
+                        <div class="stat-label">2 variations each</div>
+                    </div>
+                    <div class="stat-card wbi">
+                        <div class="stat-label" style="color: #2563eb;">WBI Ads</div>
+                        <div class="stat-number" style="color: #1e3a8a;" id="wbiAdCount">0</div>
+                        <div class="stat-label">2 variations each</div>
+                    </div>
+                    <div class="stat-card total">
+                        <div class="stat-label" style="color: #7c3aed;">Total Ads</div>
+                        <div class="stat-number" style="color: #5b21b6;" id="totalAdCount">0</div>
+                        <div class="stat-label">Run throughout campaign</div>
+                    </div>
+                </div>
+                <p class="text-sm text-gray-600" style="margin-top: 1rem;">
+                    Each promoted piece (main offer + supporting content) needs 2 ad variations per brand
+                </p>
+            </div>
+
+            <!-- Master Production Checklist -->
+            <div class="card">
+                <h2>Master Production Checklist</h2>
+
+                <div class="grid-2">
+                    <!-- COW Assets -->
+                    <div>
+                        <h3 style="color: #059669; display: flex; align-items: center; gap: 0.5rem;">
+                            <span class="brand-indicator cow"></span>
+                            Champions of Wellness
+                        </h3>
+                        <div id="cowChecklist"></div>
+                    </div>
+
+                    <!-- WBI Assets -->
+                    <div>
+                        <h3 style="color: #2563eb; display: flex; align-items: center; gap: 0.5rem;">
+                            <span class="brand-indicator wbi"></span>
+                            Well-Being Index
+                        </h3>
+                        <div id="wbiChecklist"></div>
+                    </div>
+                </div>
+
+                <!-- Summary -->
+                <div class="summary-grid">
+                    <div>
+                        <div class="stat-number" id="totalEmails">0</div>
+                        <div class="text-sm text-gray-600">Total Emails</div>
+                    </div>
+                    <div>
+                        <div class="stat-number" id="totalAds">0</div>
+                        <div class="text-sm text-gray-600">Total Ads</div>
+                    </div>
+                    <div>
+                        <div class="stat-number" id="totalContent">0</div>
+                        <div class="text-sm text-gray-600">Content Pieces</div>
+                    </div>
+                    <div>
+                        <div class="stat-number" id="totalAssets">0</div>
+                        <div class="text-sm text-gray-600">Total Assets</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // State management
+        let state = {
+            campaignName: '',
+            duration: 8,
+            mainOffer: '',
+            supportingContent: [],
+            weeklyPlan: {}
+        };
+
+        // Initialize
+        function init() {
+            initializeWeeks();
+            render();
+        }
+
+        function initializeWeeks() {
+            const newPlan = {};
+            for (let i = 1; i <= state.duration; i++) {
+                newPlan[i] = state.weeklyPlan[i] || { cow: [], wbi: [] };
+            }
+            state.weeklyPlan = newPlan;
+        }
+
+        function updateState() {
+            state.campaignName = document.getElementById('campaignName').value;
+            state.mainOffer = document.getElementById('mainOffer').value;
+            render();
+        }
+
+        function updateDuration() {
+            state.duration = parseInt(document.getElementById('duration').value);
+            initializeWeeks();
+            render();
+        }
+
+        function toggleSetup() {
+            const section = document.getElementById('setupSection');
+            const text = document.getElementById('setupToggleText');
+            if (section.classList.contains('hidden')) {
+                section.classList.remove('hidden');
+                text.textContent = 'Hide';
+            } else {
+                section.classList.add('hidden');
+                text.textContent = 'Show';
+            }
+        }
+
+        // Supporting Content
+        function addSupportingContent() {
+            state.supportingContent.push({ title: '', brand: 'COW', type: 'Blog' });
+            render();
+        }
+
+        function updateSupportingContent(index, field, value) {
+            state.supportingContent[index][field] = value;
+            render();
+        }
+
+        function removeSupportingContent(index) {
+            state.supportingContent.splice(index, 1);
+            render();
+        }
+
+        // Email Management
+        function addEmail(week, brand) {
+            state.weeklyPlan[week][brand].push({
+                promotes: state.mainOffer || '',
+                type: 'Announcement'
+            });
+            render();
+        }
+
+        function updateEmail(week, brand, emailIndex, field, value) {
+            state.weeklyPlan[week][brand][emailIndex][field] = value;
+            render();
+        }
+
+        function removeEmail(week, brand, emailIndex) {
+            state.weeklyPlan[week][brand].splice(emailIndex, 1);
+            render();
+        }
+
+        // Calculations
+        function calculateAdRequirements() {
+            const promoted = new Set();
+
+            if (state.mainOffer) {
+                promoted.add(`${state.mainOffer}|COW`);
+                promoted.add(`${state.mainOffer}|WBI`);
+            }
+
+            state.supportingContent.forEach(content => {
+                if (content.title) {
+                    promoted.add(`${content.title}|${content.brand}`);
+                }
+            });
+
+            const cowAds = Array.from(promoted).filter(p => p.endsWith('|COW')).length * 2;
+            const wbiAds = Array.from(promoted).filter(p => p.endsWith('|WBI')).length * 2;
+
+            return { cow: cowAds, wbi: wbiAds, total: cowAds + wbiAds };
+        }
+
+        function getAllAssets() {
+            const assets = {
+                cowEmails: [],
+                wbiEmails: [],
+                cowAds: [],
+                wbiAds: [],
+                supportingContent: []
+            };
+
+            // Collect emails
+            Object.keys(state.weeklyPlan).forEach(week => {
+                state.weeklyPlan[week].cow.forEach((email, idx) => {
+                    assets.cowEmails.push({
+                        week,
+                        type: email.type,
+                        promotes: email.promotes,
+                        id: `cow-w${week}-${idx}`
+                    });
+                });
+                state.weeklyPlan[week].wbi.forEach((email, idx) => {
+                    assets.wbiEmails.push({
+                        week,
+                        type: email.type,
+                        promotes: email.promotes,
+                        id: `wbi-w${week}-${idx}`
+                    });
+                });
+            });
+
+            // Calculate ads
+            const promoted = new Set();
+            if (state.mainOffer) {
+                promoted.add(`${state.mainOffer}|COW`);
+                promoted.add(`${state.mainOffer}|WBI`);
+            }
+            state.supportingContent.forEach(content => {
+                if (content.title) {
+                    promoted.add(`${content.title}|${content.brand}`);
+                }
+            });
+
+            Array.from(promoted).forEach(item => {
+                const [title, brand] = item.split('|');
+                if (brand === 'COW') {
+                    assets.cowAds.push({ title, variations: 2 });
+                } else {
+                    assets.wbiAds.push({ title, variations: 2 });
+                }
+            });
+
+            assets.supportingContent = state.supportingContent.filter(c => c.title);
+
+            return assets;
+        }
+
+        // Render functions
+        function render() {
+            renderSupportingContent();
+            renderWeeklyPlan();
+            renderAdStats();
+            renderChecklist();
+        }
+
+        function renderSupportingContent() {
+            const container = document.getElementById('supportingContentList');
+
+            if (state.supportingContent.length === 0) {
+                container.innerHTML = '<p class="text-gray-500 text-sm italic text-center" style="padding: 1rem;">No supporting content added yet</p>';
+                return;
+            }
+
+            container.innerHTML = state.supportingContent.map((content, index) => `
+                <div class="content-item">
+                    <input type="text" class="input"
+                           value="${content.title}"
+                           placeholder="Content title"
+                           onchange="updateSupportingContent(${index}, 'title', this.value)">
+                    <select class="select" style="width: auto;"
+                            onchange="updateSupportingContent(${index}, 'type', this.value)">
+                        <option ${content.type === 'Blog' ? 'selected' : ''}>Blog</option>
+                        <option ${content.type === 'Video' ? 'selected' : ''}>Video</option>
+                        <option ${content.type === 'Webinar' ? 'selected' : ''}>Webinar</option>
+                        <option ${content.type === 'Guide' ? 'selected' : ''}>Guide</option>
+                        <option ${content.type === 'Infographic' ? 'selected' : ''}>Infographic</option>
+                    </select>
+                    <select class="select" style="width: auto;"
+                            onchange="updateSupportingContent(${index}, 'brand', this.value)">
+                        <option ${content.brand === 'COW' ? 'selected' : ''}>COW</option>
+                        <option ${content.brand === 'WBI' ? 'selected' : ''}>WBI</option>
+                    </select>
+                    <button class="btn-icon btn-danger" onclick="removeSupportingContent(${index})">
+                        ✕
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function renderWeeklyPlan() {
+            const container = document.getElementById('weeklyPlan');
+            const weeks = Object.keys(state.weeklyPlan).sort((a, b) => a - b);
+
+            container.innerHTML = weeks.map(week => `
+                <div class="week-container">
+                    <h3>Week ${week}</h3>
+                    <div class="grid-2">
+                        ${renderBrandEmails(week, 'cow', 'Champions of Wellness')}
+                        ${renderBrandEmails(week, 'wbi', 'Well-Being Index')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderBrandEmails(week, brand, brandName) {
+            const emails = state.weeklyPlan[week][brand];
+            const brandColor = brand === 'cow' ? '#059669' : '#2563eb';
+
+            return `
+                <div class="brand-section ${brand}">
+                    <div class="flex-between" style="margin-bottom: 0.5rem;">
+                        <h4 style="color: ${brandColor};">${brandName}</h4>
+                        <button class="btn-icon" onclick="addEmail(${week}, '${brand}')" style="color: ${brandColor};">
+                            +
+                        </button>
+                    </div>
+                    <div class="space-y-2">
+                        ${emails.length === 0
+                            ? '<p class="text-gray-400 text-sm italic">No emails scheduled</p>'
+                            : emails.map((email, idx) => `
+                                <div class="email-card ${brand}">
+                                    <div class="flex-between" style="margin-bottom: 0.5rem;">
+                                        <select class="select text-sm" style="flex: 1; margin-right: 0.5rem;"
+                                                onchange="updateEmail(${week}, '${brand}', ${idx}, 'type', this.value)">
+                                            <option ${email.type === 'Announcement' ? 'selected' : ''}>Announcement</option>
+                                            <option ${email.type === 'Reminder' ? 'selected' : ''}>Reminder</option>
+                                            <option ${email.type === 'Invite' ? 'selected' : ''}>Invite</option>
+                                            <option ${email.type === 'Last Chance' ? 'selected' : ''}>Last Chance</option>
+                                            <option ${email.type === 'Blog Promo' ? 'selected' : ''}>Blog Promo</option>
+                                        </select>
+                                        <button class="btn-icon btn-danger" onclick="removeEmail(${week}, '${brand}', ${idx})">
+                                            ✕
+                                        </button>
+                                    </div>
+                                    <select class="select text-sm"
+                                            onchange="updateEmail(${week}, '${brand}', ${idx}, 'promotes', this.value)">
+                                        ${state.mainOffer ? `<option value="${state.mainOffer}" ${email.promotes === state.mainOffer ? 'selected' : ''}>${state.mainOffer} (Main Offer)</option>` : ''}
+                                        ${state.supportingContent.map(content =>
+                                            content.title ? `<option value="${content.title}" ${email.promotes === content.title ? 'selected' : ''}>${content.title}</option>` : ''
+                                        ).join('')}
+                                    </select>
+                                </div>
+                            `).join('')
+                        }
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderAdStats() {
+            const ads = calculateAdRequirements();
+            document.getElementById('cowAdCount').textContent = ads.cow;
+            document.getElementById('wbiAdCount').textContent = ads.wbi;
+            document.getElementById('totalAdCount').textContent = ads.total;
+        }
+
+        function renderChecklist() {
+            const assets = getAllAssets();
+
+            // COW Checklist
+            const cowHtml = `
+                <div class="checklist-section">
+                    <h4>Emails (${assets.cowEmails.length})</h4>
+                    ${assets.cowEmails.length === 0
+                        ? '<p class="text-gray-400 text-sm italic">No emails</p>'
+                        : assets.cowEmails.map(email => `
+                            <div class="checklist-item cow">
+                                Week ${email.week}: ${email.type} → ${email.promotes}
+                            </div>
+                        `).join('')
+                    }
+                </div>
+                <div class="checklist-section">
+                    <h4>Ads (${assets.cowAds.length} sets, ${assets.cowAds.length * 2} total)</h4>
+                    ${assets.cowAds.length === 0
+                        ? '<p class="text-gray-400 text-sm italic">No ads</p>'
+                        : assets.cowAds.map(ad => `
+                            <div class="checklist-item cow">
+                                ${ad.title} (2 variations)
+                            </div>
+                        `).join('')
+                    }
+                </div>
+                <div class="checklist-section">
+                    <h4>Supporting Content (${assets.supportingContent.filter(c => c.brand === 'COW').length})</h4>
+                    ${assets.supportingContent.filter(c => c.brand === 'COW').length === 0
+                        ? '<p class="text-gray-400 text-sm italic">No content</p>'
+                        : assets.supportingContent.filter(c => c.brand === 'COW').map(content => `
+                            <div class="checklist-item cow">
+                                ${content.type}: ${content.title}
+                            </div>
+                        `).join('')
+                    }
+                </div>
+            `;
+
+            // WBI Checklist
+            const wbiHtml = `
+                <div class="checklist-section">
+                    <h4>Emails (${assets.wbiEmails.length})</h4>
+                    ${assets.wbiEmails.length === 0
+                        ? '<p class="text-gray-400 text-sm italic">No emails</p>'
+                        : assets.wbiEmails.map(email => `
+                            <div class="checklist-item wbi">
+                                Week ${email.week}: ${email.type} → ${email.promotes}
+                            </div>
+                        `).join('')
+                    }
+                </div>
+                <div class="checklist-section">
+                    <h4>Ads (${assets.wbiAds.length} sets, ${assets.wbiAds.length * 2} total)</h4>
+                    ${assets.wbiAds.length === 0
+                        ? '<p class="text-gray-400 text-sm italic">No ads</p>'
+                        : assets.wbiAds.map(ad => `
+                            <div class="checklist-item wbi">
+                                ${ad.title} (2 variations)
+                            </div>
+                        `).join('')
+                    }
+                </div>
+                <div class="checklist-section">
+                    <h4>Supporting Content (${assets.supportingContent.filter(c => c.brand === 'WBI').length})</h4>
+                    ${assets.supportingContent.filter(c => c.brand === 'WBI').length === 0
+                        ? '<p class="text-gray-400 text-sm italic">No content</p>'
+                        : assets.supportingContent.filter(c => c.brand === 'WBI').map(content => `
+                            <div class="checklist-item wbi">
+                                ${content.type}: ${content.title}
+                            </div>
+                        `).join('')
+                    }
+                </div>
+            `;
+
+            document.getElementById('cowChecklist').innerHTML = cowHtml;
+            document.getElementById('wbiChecklist').innerHTML = wbiHtml;
+
+            // Summary stats
+            const ads = calculateAdRequirements();
+            document.getElementById('totalEmails').textContent = assets.cowEmails.length + assets.wbiEmails.length;
+            document.getElementById('totalAds').textContent = ads.total;
+            document.getElementById('totalContent').textContent = assets.supportingContent.length;
+            document.getElementById('totalAssets').textContent =
+                assets.cowEmails.length + assets.wbiEmails.length + ads.total + assets.supportingContent.length;
+        }
+
+        // Initialize on load
+        init();
+    </script>
+</body>
+</html>
